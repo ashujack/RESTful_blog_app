@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var middleware = require('../middleware');
 
 var Blog = require('../models/blog');
 
@@ -15,17 +16,28 @@ router.get('/', (req, res)=>{
 });
 
 //NEW ROUTE
-router.get('/new', (req,res)=>{
+router.get('/new',middleware.isLoggedIn, (req,res)=>{
     res.render('blogs/new');
 })
 
 //CREATE ROUTE
-router.post('/', (req, res)=>{
+router.post('/', middleware.isLoggedIn, (req, res)=>{
+    
+    //sanitize blog data to avoid scripts in body
     req.body.blog.body = req.sanitize(req.body.blog.body)
+    
+    var author = {
+        id: req.user._id,
+        username : req.user.username
+    }
+    req.body.blog.author = author;
+
     Blog.create(req.body.blog, (err,newBlog)=>{
         if(err){
-            res.render('blogs/new');
+            req.flash('error', 'something went wrong!')
+            res.redirect('back');
         }else{
+            req.flash('success', 'blog submitted successfully');
             res.redirect('/blogs');
         }
     });
@@ -34,6 +46,7 @@ router.post('/', (req, res)=>{
 router.get('/:id', (req, res)=>{
     Blog.findById(req.params.id, (err, foundBlog)=>{
         if(err){
+            req.flash('error','something  went wrong!');
             res.redirect('/blogs');
         }else{
             res.render('blogs/show', {blog: foundBlog})
@@ -41,9 +54,10 @@ router.get('/:id', (req, res)=>{
     });
 });
 //EDIT ROUTE
-router.get('/:id/edit', (req, res)=>{
+router.get('/:id/edit',middleware.blogOwner, (req, res)=>{
     Blog.findById(req.params.id, (err, foundBlog)=>{
         if(err){
+            req.flash('error','something  went wrong!');
             res.redirect('/blogs');
         }else{
             res.render('blogs/edit', {blog: foundBlog});
@@ -51,22 +65,26 @@ router.get('/:id/edit', (req, res)=>{
     });
 })
 // UPDATE ROUTE
-router.put('/:id', (req, res)=>{
+router.put('/:id', middleware.blogOwner, (req, res)=>{
     req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog)=>{
         if(err){
+            req.flash('error','something  went wrong!');
             res.redirect("/blogs");
         }else{
+            req.flash('success', 'blog updated successfully');
             res.redirect('/blogs/'+req.params.id);
         }
     });
 });
 //DELETE ROUTE
-router.delete('/:id', (req, res)=>{
+router.delete('/:id',middleware.blogOwner, (req, res)=>{
     Blog.findByIdAndRemove(req.params.id, (err)=>{
         if(err){
+            req.flash('error','something  went wrong!');
             res.redirect('/blogs');
         }else{
+            req.flash('success', 'blog deleted successfully');
             res.redirect('/blogs');
         }
     });

@@ -14,6 +14,27 @@
             <div class="header item"><i class="code icon"></i> Blog site</div>
             <a href="/" class="item">Home</a>
             <a href="/blogs/new" class="item">New Post</a>
+            <div class="right menu">
+                <%if(!loggedInUser){ %> 
+                    <a href="/signup" class="item">Sign up</a>
+                    <a href="/login" class="item">Login</a>
+                <%}else{ %> 
+                    <a href="#" class="item"><%= loggedInUser.username %> </a>
+                    <a href="/logout" class="item">logout</a>
+                <%} %> 
+            </div>
+            
         </div>     
     </div>
+
+
+    <div class="ui main text container">
+        <% if(success.length>0){ %> 
+            <div class="ui green message"><%= success %> </div>
+        <%} %> 
+        <% if(error.length>0){ %> 
+            <div class="ui red message"><%= error %> </div>
+        <% } %> 
+    </div>
+    
     
