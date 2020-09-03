@@ -9,13 +9,14 @@ var express             = require('express'),
 
 // requiring routes
 var indexRoutes         = require('./routes/index'),
-    blogRoutes          = require('./routes/blog');
+    blogRoutes          = require('./routes/blog'),
+    commentRoutes       = require('./routes/comments');
 
 //APP CONFIG
 mongoose.connect('mongodb://localhost:27017/restfulBlog', {useNewUrlParser:true, useUnifiedTopology:true});
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname+'/public'));
 app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 app.use(flash());
@@ -24,9 +25,9 @@ app.use(flash());
 //PASSPORT (auth) config.
 var passport            = require('passport'),
     localStrategy       = require('passport-local'),
-    session             = require('express-session');
+    expressSession      = require('express-session');
 
-app.use(session({
+app.use(expressSession({
     secret: 'dsjfhjfhsfdsf',
     resave: false,
     saveUninitialized: false
@@ -48,6 +49,10 @@ app.use((req, res, next)=>{
 
 app.use('/', indexRoutes);
 app.use('/blogs', blogRoutes);
+app.use('/blogs/:id/comments', (req, res, next)=>{
+    req.baseParams = {id:req.params.id};
+    next();
+},commentRoutes);
 
 
 app.listen(3000, ()=>{

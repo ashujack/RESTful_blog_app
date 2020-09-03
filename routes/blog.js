@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var middleware = require('../middleware');
-
 var Blog = require('../models/blog');
 
 //INDEX ROUTE
@@ -44,7 +43,7 @@ router.post('/', middleware.isLoggedIn, (req, res)=>{
 });
 //SHOW ROUTE
 router.get('/:id', (req, res)=>{
-    Blog.findById(req.params.id, (err, foundBlog)=>{
+    Blog.findById(req.params.id).populate('comments').exec((err, foundBlog)=>{
         if(err){
             req.flash('error','something  went wrong!');
             res.redirect('/blogs');

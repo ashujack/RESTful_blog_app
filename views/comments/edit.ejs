@@ -1,0 +1,16 @@
+<%- include ('../partials/header') %> 
+<div class="ui main text container segment">
+    <div class="ui huge header">Edit comment </div>
+
+
+    <form class="ui form" action="/blogs/<%= blog_id %>/comments/<%= comment._id %>?_method=put" method="POST">
+        <div class="field">
+            <label>write you comment</label>
+            <textarea name="comment[text]" ><%= comment.text %></textarea>
+        </div>
+        <input class="ui blue big basic button" type="submit">
+    </form>
+    
+</div>
+
+<%- include ('../partials/footer') %> 

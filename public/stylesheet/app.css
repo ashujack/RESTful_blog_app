@@ -6,6 +6,13 @@ i.icon{
     margin-top: 7em;
 }
 
-#delete{
+#delete {
     display: inline;
+}
+#delete_comment {
+    display: inline;
+}
+#delete_comment button{
+    padding: 0;
+    border:none;
 }
