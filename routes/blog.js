@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var middleware = require('../middleware');
 var Blog = require('../models/blog');
+const comment = require('../models/comment');
+const blog = require('../models/blog');
 
 //INDEX ROUTE
 router.get('/', (req, res)=>{

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+
 commentSchema = mongoose.Schema({
     text: String,
     author:{
@@ -17,5 +18,23 @@ commentSchema = mongoose.Schema({
     ],
     created: {type: Date, default: Date.now}
 });
+
+var Populate = field => {
+    return function(next) {
+        this.populate(field);
+        next();
+    }
+}
+
+
+
+// var autoPopulateChildren = function(next) {
+//     this.populate('children');
+//     next();
+// };
+commentSchema
+.pre('findOne', Populate('comments'))
+.pre('find', Populate('comments'))
+
 
 module.exports = mongoose.model('Comment', commentSchema);

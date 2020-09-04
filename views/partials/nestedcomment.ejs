@@ -1,0 +1,31 @@
+<% if(comment){%> 
+  <div class="ui ">
+    <a class="author"><i class="user outline icon"></i><%= comment.author.username %> </a>
+    <div class="metadata">
+      <span class="date">Today at 5:42PM</span>
+    </div>
+    <hr style="opacity: 0">
+
+    <li><%= comment.text %> </li>
+
+    <div class="actions">
+      <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/replies/new"><i class="reply icon green small"></i></a>
+      <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit"><i class="edit icon yellow small"></i></a>
+
+      <form id="delete_comment" action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+          <button id="delele-icon-button"><i class="trash icon red small"></i></button>
+      </form>      
+    </div>
+    <hr style="opacity: 0.1">
+    <% if(comment.comments){ %> 
+      
+      <% comment.comments.forEach(function(child){ %>
+          <% if (comment.comments.length > 0) {  %>
+            <ul>
+            <%- include('nestedcomment', {comment: child,}); %>
+            </ul>
+          <% } %>
+      <% }); %>
+    <% } %>
+  </div>
+<% } %> 

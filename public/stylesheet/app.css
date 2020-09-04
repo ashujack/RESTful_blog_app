@@ -16,3 +16,9 @@ i.icon{
     padding: 0;
     border:none;
 }
+ul{
+    list-style-type: none;
+}
+li{
+    padding-left:2em;
+}

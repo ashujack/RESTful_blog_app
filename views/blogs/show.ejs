@@ -31,24 +31,13 @@
       <% blog.comments.forEach((comment)=>{ %>
 
         <div class="content comment">
-            <a class="author"><%= comment.author.username %> </a>
-            <div class="metadata">
-              <span class="date">Today at 5:42PM</span>
-            </div>
+
             <div class="text">
-              <%= comment.text %> 
+              <ul>
+                <%- include ('../partials/nestedcomment',{comment:comment, level:1}) %> 
+              </ul>
             </div>
-
-            <div class="actions">
-              <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>"><i class="reply icon green small"></i></a>
-              <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit"><i class="edit icon yellow small"></i></a>
-              
-
-              <form id="delete_comment" action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                  <button class="ui red basic button"><i class="trash icon red small"></i></button>
-              </form>
-              
-            </div>
+            
         </div>
       <% }) %> 
       
@@ -64,7 +53,6 @@
       </form>
     </div>
 </div>
-
 
 
 <%- include ('../partials/footer') %> 

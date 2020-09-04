@@ -10,7 +10,8 @@ var express             = require('express'),
 // requiring routes
 var indexRoutes         = require('./routes/index'),
     blogRoutes          = require('./routes/blog'),
-    commentRoutes       = require('./routes/comments');
+    commentRoutes       = require('./routes/comments'),
+    replyRoutes         = require('./routes/replies');
 
 //APP CONFIG
 mongoose.connect('mongodb://localhost:27017/restfulBlog', {useNewUrlParser:true, useUnifiedTopology:true});
@@ -53,7 +54,10 @@ app.use('/blogs/:id/comments', (req, res, next)=>{
     req.baseParams = {id:req.params.id};
     next();
 },commentRoutes);
-
+app.use('/blogs/:id/comments/:comment_id/replies', (req,res, next)=>{
+    req.baseParams = {id: req.params.id, comment_id: req.params.comment_id};
+    next();
+}, replyRoutes);
 
 app.listen(3000, ()=>{
     console.log('server is up');
