@@ -2,7 +2,8 @@ var express = require('express')
 var router  = express.Router();
 var Blog = require('../models/blog');
 var Comment = require('../models/comment');
-var middleware = require('../middleware')
+var middleware = require('../middleware');
+
 //new reply
 router.get('/new',middleware.isLoggedIn, (req, res)=>{
     Blog.findById(req.baseParams.id, (err, foundBlog)=>{

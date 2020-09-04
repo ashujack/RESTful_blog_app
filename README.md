@@ -1,12 +1,12 @@
 ## Blog app
 
-1. You can create your blog
-2. Anyone allowed to read blog 
-3. Author can update or own blog
-4. Comment CRUD 
+1. Blog CRUD
+2. User auth
+3. Comment CRUD 
+4. reply (comment on comment)
 
 
 Next up:
 <ul>
-<li>Nested comment(reply on comments)</li>
- </ul>
+<li>User profile CRUD</li>
+</ul>
