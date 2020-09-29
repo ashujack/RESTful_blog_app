@@ -19,7 +19,8 @@
                     <a href="/signup" class="item">Sign up</a>
                     <a href="/login" class="item">Login</a>
                 <%}else{ %> 
-                    <a href="#" class="item"><%= loggedInUser.username %> </a>
+                    
+                    <a href="/user/<%= loggedInUser.id %>" class="item"><%= loggedInUser.username %> </a>
                     <a href="/logout" class="item">logout</a>
                 <%} %> 
             </div>

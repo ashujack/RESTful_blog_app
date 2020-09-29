@@ -10,6 +10,7 @@ var express             = require('express'),
 // requiring routes
 var indexRoutes         = require('./routes/index'),
     blogRoutes          = require('./routes/blog'),
+    profileRoutes       = require('./routes/profile'),
     commentRoutes       = require('./routes/comments'),
     replyRoutes         = require('./routes/replies');
 
@@ -58,6 +59,10 @@ app.use('/blogs/:id/comments/:comment_id/replies', (req,res, next)=>{
     req.baseParams = {id: req.params.id, comment_id: req.params.comment_id};
     next();
 }, replyRoutes);
+app.use('/user/:id', (req, res, next)=>{
+    req.baseParams = {id: req.params.id};
+    next();
+}, profileRoutes);
 
 app.listen(3000, ()=>{
     console.log('server is up');

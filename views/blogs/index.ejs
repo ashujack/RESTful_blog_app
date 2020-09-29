@@ -20,7 +20,9 @@
                             </div>
 
                             <div class="description">
+                                <% if(blog.body){ %>
                                 <p><%- blog.body.substring(0,200) %>.......</p>
+                                <% } %>
                             </div>
 
                             <div class="extra">
