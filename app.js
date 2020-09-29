@@ -15,7 +15,9 @@ var indexRoutes         = require('./routes/index'),
     replyRoutes         = require('./routes/replies');
 
 //APP CONFIG
-mongoose.connect('mongodb://localhost:27017/restfulBlog', {useNewUrlParser:true, useUnifiedTopology:true});
+require('dotenv').config();
+var MONGO_URI = 'mongodb+srv://ashujack:tinkumilk@nodeapi.ayyot.gcp.mongodb.net/<dbna>'
+mongoose.connect(process.env.MONGO_URI || MONGO_URI, {useNewUrlParser:true, useUnifiedTopology:true});
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+'/public'));
@@ -30,7 +32,7 @@ var passport            = require('passport'),
     expressSession      = require('express-session');
 
 app.use(expressSession({
-    secret: 'dsjfhjfhsfdsf',
+    secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -64,6 +66,6 @@ app.use('/user/:id', (req, res, next)=>{
     next();
 }, profileRoutes);
 
-app.listen(3000, ()=>{
+app.listen(process.env.PORT, ()=>{
     console.log('server is up');
 });
