@@ -3,7 +3,6 @@ var router = express.Router();
 var middleware = require('../middleware');
 var Blog = require('../models/blog');
 var Comment = require('../models/comment');
-const campground = require('../../camp/models/campground');
 const blog = require('../models/blog');
 
 
