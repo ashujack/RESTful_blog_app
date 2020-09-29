@@ -16,7 +16,6 @@ var indexRoutes         = require('./routes/index'),
 
 //APP CONFIG
 require('dotenv').config();
-var MONGO_URI = 'mongodb+srv://ashujack:tinkumilk@nodeapi.ayyot.gcp.mongodb.net/<dbna>'
 mongoose.connect(process.env.MONGO_URI || MONGO_URI, {useNewUrlParser:true, useUnifiedTopology:true});
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
